@@ -1,0 +1,45 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  port: 8081
+spring:
+  output:
+    ansi:
+      enabled: detect
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+
+api:
+  path:
+    default: /api/v1
+  version: "20221213"
+  redis-key-prefix: "hyoj:"
+
+jwt:
+  token:
+    issuer: hyoj-api
+    secret: xxxxxx
+    length: 3600 # 초단위
+#    length: 1   - 만료된토큰 테스트용
+
+
+#Naver Cloud Sens API
+naver:
+  sens:
+    service-id: ncp:sms:kr:xxxxxx:xxxxxx
+    endpoint: https://sens.apigw.ntruss.com
+    sms-url: /sms/v2/services/${naver.sens.service-id}/messages
+    access-key: xxxxxx
+    secret-key: xxxxxx
+    sender-no: "01012341234"
+
+#Kakao API
+kakao:
+  endpoint: "https://dapi.kakao.com/v2/local/search/address.json"
+  api-key: "KakaoAK xxxxxx"
+
+# One Signal URL
+one_signal:
+  notification-url: https://onesignal.com/api/v1/notifications
