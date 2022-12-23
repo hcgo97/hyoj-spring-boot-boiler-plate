@@ -89,6 +89,27 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * DB 관련 에러 처리
+     *
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(DataAccessException.class)
+    public ResponseEntity<Response<ErrorDto>> handleDataAccessException(DataAccessException ex) {
+        log.error("DataAccess Exception");
+        ex.printStackTrace();
+
+        ErrorDto errorDto = new ErrorDto(ApiResultStatus.DATABASE_ACCESS_ERROR, ex.getMessage());
+
+        Response<ErrorDto> errorResponse = Response.ErrorDtoContainer.builder()
+                .apiVersion(API_VERSION)
+                .requestId(requestIdGenerator.getRequestId())
+                .error(errorDto).build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
      * 비즈니스 예외처리
      *
      * @param ex
