@@ -2,21 +2,28 @@ package org.hyoj.mysbbp.common.exception;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hyoj.mysbbp.common.RequestIdGenerator;
 import org.hyoj.mysbbp.common.enums.ApiResultStatus;
 import org.hyoj.mysbbp.dto.ErrorDto;
-import org.hyoj.mysbbp.dto.GoogleJsonStyleGuideDto;
+import org.hyoj.mysbbp.dto.Response;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
-import javax.servlet.http.HttpServletRequest;
 
 @RequiredArgsConstructor
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+
+    private final RequestIdGenerator requestIdGenerator;
+
+    @Value("${api.version}")
+    private String API_VERSION;
 
     /**
      * 404 에러
@@ -31,10 +38,9 @@ public class GlobalExceptionHandler {
 
         ErrorDto errorDto = new ErrorDto(ApiResultStatus.NOT_FOUND, ex.getMessage());
 
-        GoogleJsonStyleGuideDto<ErrorDto> errorResponse = GoogleJsonStyleGuideDto.ErrorDtoContainer
-                .builder()
-                .apiVersion("v1")
-                .requestId((String) httpServletRequest.getAttribute("requestId"))
+        Response<ErrorDto> errorResponse = Response.ErrorDtoContainer.builder()
+                .apiVersion(API_VERSION)
+                .requestId(requestIdGenerator.getRequestId())
                 .error(errorDto).build();
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
@@ -53,10 +59,9 @@ public class GlobalExceptionHandler {
 
         ErrorDto errorDto = new ErrorDto(ex.getCode(), ex.getMessage(), ex.getDescription());
 
-        GoogleJsonStyleGuideDto<ErrorDto> errorResponse = GoogleJsonStyleGuideDto.ErrorDtoContainer
-                .builder()
-                .apiVersion("v1")
-                .requestId((String) httpServletRequest.getAttribute("requestId"))
+        Response<ErrorDto> errorResponse = Response.ErrorDtoContainer.builder()
+                .apiVersion(API_VERSION)
+                .requestId(requestIdGenerator.getRequestId())
                 .error(errorDto).build();
 
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
@@ -75,10 +80,9 @@ public class GlobalExceptionHandler {
 
         ErrorDto errorDto = new ErrorDto(ex.getCode(), ex.getMessage(), ex.getDescription());
 
-        GoogleJsonStyleGuideDto<ErrorDto> errorResponse = GoogleJsonStyleGuideDto.ErrorDtoContainer
-                .builder()
-                .apiVersion("v1")
-                .requestId((String) httpServletRequest.getAttribute("requestId"))
+        Response<ErrorDto> errorResponse = Response.ErrorDtoContainer.builder()
+                .apiVersion(API_VERSION)
+                .requestId(requestIdGenerator.getRequestId())
                 .error(errorDto).build();
 
         return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
@@ -96,10 +100,9 @@ public class GlobalExceptionHandler {
 
         ErrorDto errorDto = new ErrorDto(ex.getCode(), ex.getMessage(), ex.getDescription());
 
-        GoogleJsonStyleGuideDto<ErrorDto> errorResponse = GoogleJsonStyleGuideDto.ErrorDtoContainer
-                .builder()
-                .apiVersion("v1")
-                .requestId((String) httpServletRequest.getAttribute("requestId"))
+        Response<ErrorDto> errorResponse = Response.ErrorDtoContainer.builder()
+                .apiVersion(API_VERSION)
+                .requestId(requestIdGenerator.getRequestId())
                 .error(errorDto).build();
 
         return new ResponseEntity<>(errorResponse, ex.getHttpStatus());
@@ -120,10 +123,9 @@ public class GlobalExceptionHandler {
 
         ErrorDto errorDto = new ErrorDto(ApiResultStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
 
-        GoogleJsonStyleGuideDto<ErrorDto> errorResponse = GoogleJsonStyleGuideDto.ErrorDtoContainer
-                .builder()
-                .apiVersion("v1")
-                .requestId((String) httpServletRequest.getAttribute("requestId"))
+        Response<ErrorDto> errorResponse = Response.ErrorDtoContainer.builder()
+                .apiVersion(API_VERSION)
+                .requestId(requestIdGenerator.getRequestId())
                 .error(errorDto).build();
 
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
