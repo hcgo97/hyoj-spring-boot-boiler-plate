@@ -8,12 +8,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class GoogleJsonStyleGuideDto<T extends BaseDto> {
+public class Response<T extends BaseDto> {
     protected String apiVersion;
     protected String requestId;
 
     @Getter
-    public static class ErrorDtoContainer<T> extends GoogleJsonStyleGuideDto<ErrorDto> {
+    public static class ErrorDtoContainer<T> extends Response<ErrorDto> {
         private final T error;
 
         @Builder
@@ -24,7 +24,7 @@ public class GoogleJsonStyleGuideDto<T extends BaseDto> {
     }
 
     @Getter
-    public static class DataDtoContainer<T> extends GoogleJsonStyleGuideDto<DataDto> {
+    public static class DataDtoContainer<T> extends Response<DataDto> {
         private final T data;
 
         @Builder

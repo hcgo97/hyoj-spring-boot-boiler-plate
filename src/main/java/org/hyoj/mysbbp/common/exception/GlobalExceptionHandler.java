@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<GoogleJsonStyleGuideDto<ErrorDto>> handleEntityNotFoundException(EntityNotFoundException ex, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<Response<ErrorDto>> handleEntityNotFoundException(EntityNotFoundException ex) {
         log.error("Data Not Found Exception");
         ex.printStackTrace();
 
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<GoogleJsonStyleGuideDto<ErrorDto>> handleUnauthorizedException(UnauthorizedException ex, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<Response<ErrorDto>> handleUnauthorizedException(UnauthorizedException ex) {
         log.error("Unauthorized Exception - {}", ex.getCode() + "," + ex.getMessage() + "," + ex.getDescription());
         ex.printStackTrace();
 
@@ -69,7 +69,7 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(ForbiddenException.class)
-    public ResponseEntity<GoogleJsonStyleGuideDto<ErrorDto>> handleForbiddenException(ForbiddenException ex, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<Response<ErrorDto>> handleForbiddenException(ForbiddenException ex) {
         log.error("Forbidden Exception - {}", ex.getCode() + "," + ex.getMessage() + "," + ex.getDescription());
         ex.printStackTrace();
 
@@ -91,7 +91,7 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<GoogleJsonStyleGuideDto<ErrorDto>> handleBusinessException(BusinessException ex, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<Response<ErrorDto>> handleBusinessException(BusinessException ex) {
         log.error("Business Exception - {}", ex.getCode() + "," + ex.getMessage() + "," + ex.getDescription());
 
         ErrorDto errorDto = new ErrorDto(ex.getCode(), ex.getMessage(), ex.getDescription());
@@ -112,7 +112,7 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<GoogleJsonStyleGuideDto<ErrorDto>> handleException(Exception ex, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<Response<ErrorDto>> handleException(Exception ex) {
         log.error("Internal Server Error Exception");
         log.error(ex.getMessage());
 
