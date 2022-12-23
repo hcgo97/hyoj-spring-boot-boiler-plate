@@ -1,0 +1,40 @@
+version: '3.8'
+
+volumes:
+  db-data:
+    external: false
+  redis-data:
+
+services:
+  mysql:
+    image: mysql:8.0.25
+    platform: linux/amd64
+    container_name: my_sbbp_mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: mydb
+      MYSQL_ROOT_PASSWORD: root1234
+      LANG: C.UTF-8
+      TZ: Asia/Seoul
+    volumes:
+      - db-data:/var/lib/mysql
+    command: --sql_mode=''
+
+  redis:
+    image: redis:6.2.6-alpine3.15
+    container_name: my_sbbp_redis
+    volumes:
+      - redis-data:/data
+    ports:
+      - 6379:6379
+    command: redis-server
+    depends_on:
+      - helper
+
+  helper:
+    container_name: my_sbbp_helper
+    image: alpine
+    command: sh -c "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
+    privileged: true
