@@ -6,6 +6,7 @@ import org.hyoj.mysbbp.dto.Response;
 import org.hyoj.mysbbp.dto.ResultDto;
 import org.hyoj.mysbbp.dto.UserDto;
 import org.hyoj.mysbbp.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class UserController extends BaseController {
     public ResponseEntity<Response<DataDto>> signUp(@RequestBody UserDto.SignUpDto inputDto) {
 
         ResultDto resultDto = userService.signUp(inputDto);
-        return ResponseEntity.ok(dataContainerBuilder.data(resultDto).build());
+        return new ResponseEntity<>(responseBuilder(resultDto), HttpStatus.CREATED);
     }
 
     /**
@@ -35,7 +36,7 @@ public class UserController extends BaseController {
     public ResponseEntity<Response<DataDto>> signIn(@RequestBody UserDto.SignInDto inputDto) {
 
         UserDto.TokenDto tokenDto = userService.signIn(inputDto);
-        return ResponseEntity.ok(dataContainerBuilder.data(tokenDto).build());
+        return new ResponseEntity<>(responseBuilder(tokenDto), HttpStatus.OK);
     }
 
     /**
@@ -45,7 +46,7 @@ public class UserController extends BaseController {
     public ResponseEntity<Response<DataDto>> getUserList() {
 
         List<UserDto.UserInfoDto> userList = userService.getUserList();
-        return ResponseEntity.ok(dataContainerBuilder.data(userList).build());
+        return new ResponseEntity<>(responseBuilder(userList), HttpStatus.OK);
     }
 
     /**
@@ -55,7 +56,7 @@ public class UserController extends BaseController {
     public ResponseEntity<Response<DataDto>> showUserDetail(@PathVariable Long userId) {
 
         UserDto.UserInfoDto userInfoDto = userService.showUserDetail(userId);
-        return ResponseEntity.ok(dataContainerBuilder.data(userInfoDto).build());
+        return new ResponseEntity<>(responseBuilder(userInfoDto), HttpStatus.OK);
     }
 
     /**
@@ -66,7 +67,7 @@ public class UserController extends BaseController {
                                                         @RequestBody UserDto.SignUpDto inputDto) {
 
         ResultDto resultDto = userService.modifyUser(userId, inputDto);
-        return ResponseEntity.ok(dataContainerBuilder.data(resultDto).build());
+        return new ResponseEntity<>(responseBuilder(resultDto), HttpStatus.OK);
     }
 
     /**
@@ -76,6 +77,6 @@ public class UserController extends BaseController {
     public ResponseEntity<Response<DataDto>> deleteUser(@PathVariable Long userId) {
 
         ResultDto resultDto = userService.deleteUser(userId);
-        return ResponseEntity.ok(dataContainerBuilder.data(resultDto).build());
+        return new ResponseEntity<>(responseBuilder(resultDto), HttpStatus.OK);
     }
 }
