@@ -34,5 +34,5 @@ java -Dspring.profiles.active=local -jar ./build/libs/my-spring-boot-boiler-plat
 
 ### 디렉토리, 파일구성
 * server_dir: /app/hyoj-server
-* jar: ${admin_home}/lib/my-spring-boot-boiler-plate-*.jar
-* log: ${admin_home}/logs/app.log
+* jar: ${server_dir}/lib/my-spring-boot-boiler-plate-*.jar
+* log: ${server_dir}/logs/app.log
