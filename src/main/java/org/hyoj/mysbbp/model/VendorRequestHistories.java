@@ -8,11 +8,11 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "vendor_request_history")
+@Table(name = "vendor_request_histories")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class VendorRequestHistory extends BaseTimeEntity {
+public class VendorRequestHistories extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

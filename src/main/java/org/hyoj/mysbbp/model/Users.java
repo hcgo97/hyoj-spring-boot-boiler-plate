@@ -38,7 +38,7 @@ public class Users extends BaseTimeEntity {
     private String email;
 
     @Column(name = "login_count")
-    private int loginCount;
+    private Integer loginCount;
 
     @Column(name = "is_deleted")
     private String isDeleted;

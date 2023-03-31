@@ -12,7 +12,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.hyoj.mysbbp.common.EndPointHelper;
 import org.hyoj.mysbbp.common.RequestIdGenerator;
-import org.hyoj.mysbbp.model.VendorRequestHistory;
+import org.hyoj.mysbbp.model.VendorRequestHistories;
 import org.hyoj.mysbbp.repository.VendorRequestHistoryRepository;
 import org.springframework.stereotype.Component;
 
@@ -65,7 +65,7 @@ public class VendorRequestAspect {
             log.error("IOException Occurred");
         }
 
-        VendorRequestHistory requestHistory = new VendorRequestHistory();
+        VendorRequestHistories requestHistory = new VendorRequestHistories();
         requestHistory.setRequestId(requestIdGenerator.getRequestId());
         requestHistory.setEndPoint(request.url().toString());
         requestHistory.setRequestHeader(request.headers().toString());

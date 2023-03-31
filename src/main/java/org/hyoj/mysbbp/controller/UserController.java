@@ -2,10 +2,11 @@ package org.hyoj.mysbbp.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.hyoj.mysbbp.dto.DataDto;
-import org.hyoj.mysbbp.dto.GoogleJsonStyleGuideDto;
+import org.hyoj.mysbbp.dto.Response;
 import org.hyoj.mysbbp.dto.ResultDto;
 import org.hyoj.mysbbp.dto.UserDto;
 import org.hyoj.mysbbp.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,60 +23,60 @@ public class UserController extends BaseController {
      * 유저 등록
      */
     @PostMapping("/sign-up")
-    public ResponseEntity<GoogleJsonStyleGuideDto<DataDto>> signUp(@RequestBody UserDto.SignUpDto inputDto) {
+    public ResponseEntity<Response<DataDto>> signUp(@RequestBody UserDto.SignUpDto inputDto) {
 
         ResultDto resultDto = userService.signUp(inputDto);
-        return ResponseEntity.ok(dataContainerBuilder.data(resultDto).build());
+        return new ResponseEntity<>(responseBuilder(resultDto), HttpStatus.CREATED);
     }
 
     /**
      * 로그인
      */
     @PostMapping("/sign-in")
-    public ResponseEntity<GoogleJsonStyleGuideDto<DataDto>> signIn(@RequestBody UserDto.SignInDto inputDto) {
+    public ResponseEntity<Response<DataDto>> signIn(@RequestBody UserDto.SignInDto inputDto) {
 
         UserDto.TokenDto tokenDto = userService.signIn(inputDto);
-        return ResponseEntity.ok(dataContainerBuilder.data(tokenDto).build());
+        return new ResponseEntity<>(responseBuilder(tokenDto), HttpStatus.OK);
     }
 
     /**
      * 유저 리스트 조회
      */
     @GetMapping
-    public ResponseEntity<GoogleJsonStyleGuideDto<DataDto>> getUserList() {
+    public ResponseEntity<Response<DataDto>> getUserList() {
 
         List<UserDto.UserInfoDto> userList = userService.getUserList();
-        return ResponseEntity.ok(dataContainerBuilder.data(userList).build());
+        return new ResponseEntity<>(responseBuilder(userList), HttpStatus.OK);
     }
 
     /**
      * 유저 상세 조회
      */
     @GetMapping("/{userId}")
-    public ResponseEntity<GoogleJsonStyleGuideDto<DataDto>> showUserDetail(@PathVariable Long userId) {
+    public ResponseEntity<Response<DataDto>> showUserDetail(@PathVariable Long userId) {
 
         UserDto.UserInfoDto userInfoDto = userService.showUserDetail(userId);
-        return ResponseEntity.ok(dataContainerBuilder.data(userInfoDto).build());
+        return new ResponseEntity<>(responseBuilder(userInfoDto), HttpStatus.OK);
     }
 
     /**
      * 유저 수정
      */
     @PutMapping("/{userId}")
-    public ResponseEntity<GoogleJsonStyleGuideDto<DataDto>> modifyUser(@PathVariable Long userId,
-                                                                       @RequestBody UserDto.SignUpDto inputDto) {
+    public ResponseEntity<Response<DataDto>> modifyUser(@PathVariable Long userId,
+                                                        @RequestBody UserDto.SignUpDto inputDto) {
 
         ResultDto resultDto = userService.modifyUser(userId, inputDto);
-        return ResponseEntity.ok(dataContainerBuilder.data(resultDto).build());
+        return new ResponseEntity<>(responseBuilder(resultDto), HttpStatus.OK);
     }
 
     /**
      * 유저 삭제
      */
     @DeleteMapping("/{userId}")
-    public ResponseEntity<GoogleJsonStyleGuideDto<DataDto>> deleteUser(@PathVariable Long userId) {
+    public ResponseEntity<Response<DataDto>> deleteUser(@PathVariable Long userId) {
 
         ResultDto resultDto = userService.deleteUser(userId);
-        return ResponseEntity.ok(dataContainerBuilder.data(resultDto).build());
+        return new ResponseEntity<>(responseBuilder(resultDto), HttpStatus.OK);
     }
 }
