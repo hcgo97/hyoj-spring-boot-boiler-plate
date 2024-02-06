@@ -1,38 +1,13 @@
-# hyoj-spring-boot-boiler-plate
-## HyoJ's 스프링부트 템플릿
+# hyoj-spring-boot-boiler-plate-2.x
+HyoJ's 스프링부트 템플릿 2.x 버전
 
-## 환경
-* language: openJDK 11.0.2
-* Framework: SpringBoot 2.7.3
-* build & lib management: Gradle 7.x
-* DB: MySQL 8.x
-* Cache: Redis 5.x
-* ORM: JPA, QueryDSL
-* Etc: Lombok, JWT
+## 2. 서버 구성
+## 2-1. 개발 환경
+- **Language**: openjdk 11
+- **Framework**: SpringBoot 2.7.3
+- **build & lib management**: Gradle 7.5
+- **DB**: MySQL 8.0.25, Redis 6.2.6
+- **ORM**: Spring Boot JPA
 
-## 테스트
-### build
-```bash
-./gradlew bootJar
-```
-
-### run
-```bash
-# local 환경
-java -Dspring.profiles.active=local -jar ./build/libs/my-spring-boot-boiler-plate-*.jar
-```
-
-## 서버 정보
-### port
-- local listen port: 8081
-
-### API prefix
-* ${endpoint}/api/v1
-
-### Health Check URL
-* /ping
-
-### 디렉토리, 파일구성
-* server_dir: /app/hyoj-server
-* jar: ${server_dir}/lib/my-spring-boot-boiler-plate-*.jar
-* log: ${server_dir}/logs/app.log
+## 2-2. Host
+- http://localhost:8080
